@@ -2,41 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* ADmyBRAND Analytics Dashboard Design System
+Beautiful modern analytics platform with deep blues, electric accents, and smooth animations.
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Brand Colors - Deep professional blues with electric accents */
+    --background: 240 10% 3.9%;
+    --foreground: 240 5% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 240 8% 6%;
+    --card-foreground: 240 5% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 8% 6%;
+    --popover-foreground: 240 5% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 220 90% 56%;
+    --primary-foreground: 240 10% 3.9%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 240 5% 15%;
+    --secondary-foreground: 240 5% 95%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 5% 12%;
+    --muted-foreground: 240 4% 58%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 192 95% 68%;
+    --accent-foreground: 240 10% 3.9%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 240 5% 95%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --success: 142 76% 36%;
+    --success-foreground: 240 5% 95%;
 
-    --radius: 0.5rem;
+    --warning: 38 92% 50%;
+    --warning-foreground: 240 10% 3.9%;
+
+    --border: 240 6% 12%;
+    --input: 240 6% 12%;
+    --ring: 220 90% 56%;
+
+    --radius: 0.75rem;
+
+    /* Custom Design Tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(220 90% 56%), hsl(192 95% 68%));
+    --gradient-card: linear-gradient(135deg, hsl(240 8% 6% / 0.8), hsl(240 6% 8% / 0.9));
+    --gradient-subtle: linear-gradient(180deg, hsl(240 8% 6%), hsl(240 6% 4%));
+    --glow-primary: 0 0 40px hsl(220 90% 56% / 0.3);
+    --glow-accent: 0 0 30px hsl(192 95% 68% / 0.2);
+    --shadow-elegant: 0 10px 40px -10px hsl(220 90% 56% / 0.1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +118,104 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+}
+
+@layer components {
+  /* Dashboard Card Component */
+  .dashboard-card {
+    @apply bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-6;
+    background-image: var(--gradient-card);
+    box-shadow: var(--shadow-elegant);
+    transition: var(--transition-smooth);
+  }
+
+  .dashboard-card:hover {
+    @apply border-primary/30;
+    box-shadow: var(--glow-primary);
+    transform: translateY(-2px);
+  }
+
+  /* Metric Card Variants */
+  .metric-card-primary {
+    @apply dashboard-card;
+    background: var(--gradient-primary);
+    @apply text-primary-foreground;
+  }
+
+  .metric-card-accent {
+    @apply dashboard-card border-accent/30;
+  }
+
+  .metric-card-accent:hover {
+    box-shadow: var(--glow-accent);
+  }
+
+  /* Chart Container */
+  .chart-container {
+    @apply dashboard-card;
+    @apply h-80 flex flex-col;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass Effect */
+  .glass-effect {
+    @apply bg-card/10 backdrop-blur-md border border-white/10;
+  }
+
+  /* Loading Animation */
+  .pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: var(--glow-primary);
+    }
+    50% {
+      opacity: .8;
+      box-shadow: var(--glow-accent);
+    }
+  }
+
+  /* Hover Scale Animation */
+  .hover-lift {
+    transition: var(--transition-smooth);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px) scale(1.02);
   }
 }
